@@ -4,18 +4,20 @@
 Return gitaly host for internal statefulsets
 */}}
 {{- define "gitlab.gitaly.storage.internal" -}}
-{{- $releaseName := .Release.Name -}}
-{{- $name := coalesce .Values.gitaly.serviceName .Values.global.gitaly.serviceName "gitaly" -}}
-{{- range $i, $storage := .Values.global.gitaly.internal.names -}}
-{{- printf "%s:\n" $storage -}}
-{{- printf  "path: /var/opt/gitlab/repo\n" | indent 2 -}}
-{{- $podName := printf "%s-gitaly-%d" $releaseName $i -}}
-{{- if $.Values.global.gitaly.tls.enabled }}
-{{- printf "gitaly_address: tls://%s.%s-%s.%s:%d\n" $podName $releaseName $name $.Release.Namespace 8076 -}}
-{{- else }}
-{{- printf "gitaly_address: tcp://%s.%s-%s.%s:%d\n" $podName $releaseName $name $.Release.Namespace 8075 -}}
-{{- end -}}
-{{- end -}}
+{{-   if .Values.gitaly.enabled -}}
+{{-     $releaseName := .Release.Name -}}
+{{-     $name := coalesce .Values.gitaly.serviceName .Values.global.gitaly.serviceName "gitaly" -}}
+{{-     range $i, $storage := .Values.global.gitaly.internal.names -}}
+{{-       printf "%s:\n" $storage -}}
+{{-       printf  "path: /var/opt/gitlab/repo\n" | indent 2 -}}
+{{-       $podName := printf "%s-gitaly-%d" $releaseName $i -}}
+{{-       if $.Values.global.gitaly.tls.enabled }}
+{{-         printf "gitaly_address: tls://%s.%s-%s.%s:%d\n" $podName $releaseName $name $.Release.Namespace 8076 -}}
+{{-       else }}
+{{-         printf "gitaly_address: tcp://%s.%s-%s.%s:%d\n" $podName $releaseName $name $.Release.Namespace 8075 -}}
+{{-       end -}}
+{{-     end -}}
+{{-   end -}}
 {{- end -}}
 
 
