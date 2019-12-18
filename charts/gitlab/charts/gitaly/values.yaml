@@ -3,7 +3,9 @@
 # Declare variables to be passed into your templates.
 
 global:
+  enabled: true
   gitaly:
+    enabled: true
     internal:
       names: ["default"]
     external: []
@@ -22,7 +24,6 @@ service:
   tls:
     externalPort: 8076
     internalPort: 8076
-enabled: true
 serviceName: gitaly
 annotations: {}
 
