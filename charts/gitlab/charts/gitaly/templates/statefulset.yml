@@ -212,4 +212,4 @@ spec:
       {{ toYaml .Values.persistence.matchExpressions | indent 6 }}
       {{- end -}}
   {{- end }}
-{{ end }}
+{{- end }}
