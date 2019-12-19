@@ -49,9 +49,10 @@ default:
   gitaly_address: {{ printf "tcp://%s:%d" .Values.global.gitaly.host (default 8075 .Values.global.gitaly.port | int64 ) }}
   {{-   end -}}
 {{-   else -}}
+{{- /* global.gitaly host is not specified */ -}}
 {{-     if .Values.global.gitaly.enabled }}
 {{-       if .Values.global.gitaly.external }}
-{{-         required "global.gitaly.enabled can be used with external repos" .Values.raise_error }}
+{{-         required "global.gitaly.enabled can not be used with external repos" .Values.raise_error }}
 {{-       end }}
 {{- /* Internal default repo */ -}}
 {{        template "gitlab.gitaly.storage.internal" . }}
