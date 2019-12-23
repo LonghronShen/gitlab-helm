@@ -51,9 +51,6 @@ default:
 {{-   else -}}
 {{- /* global.gitaly host is not specified */ -}}
 {{-     if .Values.global.gitaly.enabled }}
-{{-       if .Values.global.gitaly.external }}
-{{-         required "global.gitaly.enabled can not be used with external repos" .Values.raise_error }}
-{{-       end }}
 {{- /* Internal default repo */ -}}
 {{        template "gitlab.gitaly.storage.internal" . }}
 {{-     else if .Values.global.gitaly.external -}}
