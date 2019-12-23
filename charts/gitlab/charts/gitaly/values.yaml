@@ -3,12 +3,16 @@
 # Declare variables to be passed into your templates.
 
 global:
-  enabled: true
   gitaly:
     enabled: true
     internal:
       names: ["default"]
     external: []
+  # imagePullPolicy: IfNotPresent
+  redis:
+    password: {}
+  gitaly:
+    authToken: {}
 
 internal: {}
 image:
@@ -36,13 +40,6 @@ init:
 
 ## Support for tolerations for pod scheduling
 tolerations: []
-
-global:
-  # imagePullPolicy: IfNotPresent
-  redis:
-    password: {}
-  gitaly:
-    authToken: {}
 
 logging:
   format: "json"
