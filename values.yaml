@@ -98,6 +98,7 @@ global:
 
   ## doc/charts/globals.md#configure-gitaly-settings
   gitaly:
+    enabled: true
     authToken: {}
       # secret:
       # key:
