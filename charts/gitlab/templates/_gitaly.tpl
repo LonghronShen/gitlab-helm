@@ -53,11 +53,10 @@ default:
 {{-     if .Values.global.gitaly.enabled }}
 {{- /* Internal default repo */ -}}
 {{        template "gitlab.gitaly.storage.internal" . }}
-{{-     else if .Values.global.gitaly.external -}}
+{{-     end -}}
+{{-     if .Values.global.gitaly.external -}}
 {{- /* External repos */ -}}
 {{        template "gitlab.gitaly.storage.external" . }}
-{{-     else }}
-{{-       required "external gitaly repos needs to be specified if global.gitaly.enabled is not set" .Values.raise_error }}
 {{-     end -}}
 {{-   end -}}
 {{- end -}}

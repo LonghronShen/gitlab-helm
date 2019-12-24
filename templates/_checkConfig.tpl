@@ -27,6 +27,7 @@ Due to gotpl scoping, we can't make use of `range`, so we have to add action lin
 {{- $messages := append $messages (include "gitlab.checkConfig.redis.both" .) -}}
 {{- $messages := append $messages (include "gitlab.checkConfig.gitaly.tls" .) -}}
 {{- $messages := append $messages (include "gitlab.checkConfig.sidekiq.queues.mixed" .) -}}
+{{- $messages := append $messages (include "gitlab.checkConfig.gitaly.extern.repos" .) -}}
 {{- /* prepare output */}}
 {{- $messages := without $messages "" -}}
 {{- $message := join "\n" $messages -}}
@@ -74,3 +75,12 @@ sidekiq: mixed queues
 {{- end -}}
 {{- end -}}
 {{/* END gitlab.checkConfig.sidekiq.queues.mixed */}}
+
+{{/* Check configuration of Gitaly external repos*/}}
+{{- define "gitlab.checkConfig.gitaly.extern.repos"-}}
+{{-   if (and (not .Values.global.gitaly.enabled) (not .Values.global.gitaly.external) ) -}}
+gitaly:
+    external Gitaly repos needs to be specified if global.gitaly.enabled is not set
+{{-   end -}}
+{{- end -}}
+{{/* END gitlab.checkConfig.gitaly.extern.repos */}}
