@@ -12,11 +12,11 @@ to the `helm install` command using the `--set` flags.
 | `global.gitlab.license.key`                    | Key pointing to the Enterprise license in the license secret                                | `license`                                     |
 | `global.gitlab.license.secret`                 | Global name of the secret containing the Enterprise license                                 | _none_                                        |
 | `global.application.create`                    | Create an [Application resource](https://github.com/kubernetes-sigs/application) for GitLab | `false`                                       |
-| `global.edition`                               | The edition of GitLab to install. Enterprise Edition (ee) or Community Edition (ce)         | `ee`                                   |
-| `global.gitaly.enabled`                        | Gitaly enable flag                                                                                 | true                                   |
+| `global.edition`                               | The edition of GitLab to install. Enterprise Edition (ee) or Community Edition (ce)         | `ee`                                          |
+| `global.gitaly.enabled`                        | Gitaly enable flag                                                                          | true                                          |
 | `global.hosts.domain`                          | Domain name that will be used for all publicly exposed services                             | Required                                      |
 | `global.hosts.externalIP`                      | Static IP to assign to NGINX Ingress controller                                             | Required                                      |
-| `global.hosts.ssh`                             | Domain name that will be used for Git SSH access                                            | `gitlab.{global.hosts.domain}`                |
+| `global.hosts.ssh`                             | Domain name that will be used for Git SSH access                                            | `gitlab.{global.hosts.domain}`       |
 | `global.imagePullPolicy`                       | Set a default imagePullPolicy for all charts                                                | `IfNotPresent`                                |
 | `global.minio.enabled`                         | MinIO enable flag                                                                           | `true`                                        |
 | `global.psql.host`                             | Global hostname of an external psql, overrides subcharts' psql configuration                | _Uses in-cluster non-production PostgreSQL_   |
