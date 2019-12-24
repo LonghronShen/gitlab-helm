@@ -20,8 +20,8 @@ as a result we also need to configure GitLab Shell within this chart.
 The `gitaly` chart is configured in two parts: [external services](#external-services),
 and [chart settings](#chart-settings).
 
-`gitaly` is by default deployed as a component when deploying the GitLab
-chart. If deploying `gitaly` separately, `global.gitaly.enabled` needs to
+Gitaly is by default deployed as a component when deploying the GitLab
+chart. If deploying Gitaly separately, `global.gitaly.enabled` needs to
 be set to `false` and additional configuration will need to be performed
 as described in the [external-gitaly documenation](../../../advanced/external-gitaly/).
 
