@@ -77,7 +77,7 @@ sidekiq: mixed queues
 {{/* END gitlab.checkConfig.sidekiq.queues.mixed */}}
 
 {{/* Check configuration of Gitaly external repos*/}}
-{{- define "gitlab.checkConfig.gitaly.extern.repos"-}}
+{{- define "gitlab.checkConfig.gitaly.extern.repos" -}}
 {{-   if (and (not .Values.global.gitaly.enabled) (not .Values.global.gitaly.external) ) -}}
 gitaly:
     external Gitaly repos needs to be specified if global.gitaly.enabled is not set
