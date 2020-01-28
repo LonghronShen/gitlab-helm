@@ -834,9 +834,12 @@ wait_for_images:
   script:
     - bash scripts/wait_for_images.sh
   only:
-    - tags@gitlab/charts/gitlab
-    - tags@charts/gitlab
-    - /.*-stable/
+    tags:
+      - tags@gitlab/charts/gitlab
+      - tags@charts/gitlab
+      - /.*-stable/
+    variables:
+      - $CI_COMMIT_TAG =~ /^\d+\.\d+\.\d+\+[^ ]{7,}\.[^ ]{7,}$/
 
 release_package:
   stage: package
@@ -847,6 +850,37 @@ release_package:
         https://gitlab.com/api/v4/projects/2860651/trigger/pipeline
   only:
     - tags@gitlab/charts/gitlab
+  dependencies:
+    - wait_for_images
+
+release_auto_deploy:
+  stage: package
+  script:
+    - APP_VERSION=$(echo $CI_COMMIT_TAG | cut -d+ -f2 | cut -d. -f1)
+    - CHART_VERSION=$(grep version Chart.yaml | awk {'print $2'})
+    - apk add --no-cache py-pip
+    - pip install awscli
+    - helm init --client-only
+    - cd ..
+    - mv gitlab gitlab-unstable
+    - cd gitlab-unstable
+    - sed -i 's/^name: gitlab$/name: gitlab-unstable/' $CLONE_DIR/charts/gitlab-unstable/Chart.yaml
+    - helm dep up
+    - mkdir public/
+    - aws s3 cp s3://$S3_BUCKET/index.yaml public/index.yaml
+    - cd public
+    - helm package
+        ../gitlab-unstable
+        --version=${CHART_VERSION}-${APP_VERSION}
+        --app-version=${APP_VERSION}
+    - helm repo index public
+        --merge public/index.yaml
+        --url https://$S3_BUCKET.s3.amazonaws.com
+    - aws s3 sync public s3://$S3_BUCKET
+        --acl public-read
+  only:
+    variables:
+      - $CI_COMMIT_TAG =~ /^\d+\.\d+\.\d+\+[^ ]{7,}\.[^ ]{7,}$/
   dependencies:
     - wait_for_images
 
